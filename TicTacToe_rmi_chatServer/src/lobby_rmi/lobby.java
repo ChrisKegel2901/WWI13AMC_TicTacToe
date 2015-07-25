@@ -74,7 +74,7 @@ public class lobby extends JFrame {
 
 	public lobby(String name) throws MalformedURLException, RemoteException, NotBoundException {
 
-		chatServer server = (chatServer) Naming.lookup("//localhost:2021/chat-server");
+		chatServer server = (chatServer) Naming.lookup("rmi://192.168.0.12:2021/chat-server");
 		handle = new chatHandleImpl(this);
 		session = server.createSession(name, handle);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
