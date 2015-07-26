@@ -25,7 +25,7 @@ public interface TicTacToe_server extends Remote {
 	 * @param Actionevent des gedr�ckten Buttons
 	 * 
 	 */
-	public void jButton_ActionPerformedCS(ActionEvent evt) throws RemoteException;
+	public void jButton_ActionPerformedCS(ActionEvent evt, int holder) throws RemoteException;
 	
 	/**
 	 * Hier wird das Spiel zur�ckgesetzt und neu gestartet.
@@ -35,13 +35,6 @@ public interface TicTacToe_server extends Remote {
 	 */
 	public void jButton10_ActionPerformedCS(ActionEvent evt) throws RemoteException;
 	
-	/**
-	 * Hier pr�ft das Spiel, ob einer der Spieler
-	 * gewonnen hat oder ein Unentschieden herauskam.
-	 * Die Anzahl der gewonnenen Spiele werden nach Spieler
-	 * gez�hlt und als Zwischenstand ausgegeben.
-	 */
-	public void victoryCS() throws RemoteException;
 	
 	
 

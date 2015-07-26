@@ -5,11 +5,11 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 import tictactoe_rmi_interface.TicTacToe_server;
+import tictactoe_rmi_interface.TicTacToe_client;
 
 /**
 *
@@ -22,6 +22,15 @@ import tictactoe_rmi_interface.TicTacToe_server;
 */
 @SuppressWarnings("serial")
 public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTacToe_server {
+	
+	private int player = 1;
+	private String symbol = "X";
+	private TicTacToe_client player1;
+	private TicTacToe_client player2;
+	private int[] pl = new int[9];
+	private int[] i = new int[9];
+	
+	
 
 	protected TicTacToe_server_Impl() throws RemoteException {
 		super();
@@ -43,23 +52,155 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 
 
 	@Override
-	public void jButton_ActionPerformedCS(ActionEvent evt) throws RemoteException {
-		// TODO Auto-generated method stub
+	public void jButton_ActionPerformedCS(ActionEvent evt, int holder) throws RemoteException {
+		if (i[(holder - 1)] == 0) {
+			if (player == 1) {
+				pl[(holder - 1)] = 1;
+				player = 2;
+				symbol = "O";
+				player1.setSignSC(holder, symbol);
+				player2.setSignSC(holder, symbol);
+				
+			} else {
+				pl[(holder - 1)] = 2;
+				player = 1;
+				symbol = "X";
+				player1.setSignSC(holder, symbol);
+				player2.setSignSC(holder, symbol);
+			}
+			i[(holder - 1)] = 1;
+			try {
+				victory();
+			} catch (RemoteException e){
+				System.out.println("Konnte Client nicht mitteilen, wer gewonnen hat!");
+			}
+		}
+}
 		
-	}
 
 	@Override
 	public void jButton10_ActionPerformedCS(ActionEvent evt)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		player1.reset();
+		player2.reset();
+		for (int h = 0; h < i.length; h++) {
+			i[h] = 0;
+		}
+		for (int k = 0; k < pl.length; k++) {
+			pl[k] = 0;
+		}
+
+		player = 1;
+		symbol = "X";
 	}
 
-	@Override
-	public void victoryCS() throws RemoteException {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	public void victory() throws RemoteException  {
+		// Sieg Horizontal
+
+				if (pl[0] == pl[1]) {
+					if (pl[1] == pl[2]) {
+						if (pl[1] == 1) {
+							player1.victorySC(1);
+							player2.victorySC(2);
+							
+						} else if (pl[1] == 2) {
+							player1.victorySC(2);
+							player2.victorySC(1);
+						}
+					}
+				}
+				if (pl[3] == pl[4]) {
+					if (pl[4] == pl[5]) {
+						if (pl[4] == 1) {
+							player1.victorySC(1);
+							player2.victorySC(2);
+						} else if (pl[4] == 2) {
+							player1.victorySC(2);
+							player2.victorySC(1);
+						}
+					}
+				}
+				if (pl[6] == pl[7]) {
+					if (pl[7] == pl[8]) {
+						if (pl[7] == 1) {
+							player1.victorySC(1);
+							player2.victorySC(2);
+						} else if (pl[7] == 2) {
+							player1.victorySC(2);
+							player2.victorySC(1);
+						}
+					}
+				}
+
+				// Sieg Diagonal
+				if (pl[0] == pl[4]) {
+					if (pl[4] == pl[8]) {
+						if (pl[4] == 1) {
+							player1.victorySC(1);
+							player2.victorySC(2);
+						} else if (pl[4] == 2) {
+							player1.victorySC(2);
+							player2.victorySC(1);
+						}
+					}
+				}
+				if (pl[2] == pl[4]) {
+					if (pl[4] == pl[6]) {
+						if (pl[4] == 1) {
+							player1.victorySC(1);
+							player2.victorySC(2);
+						} else if (pl[4] == 2) {
+							player1.victorySC(2);
+							player2.victorySC(1);
+						}
+					}
+				}
+
+				// Sieg Vertikal
+				if (pl[0] == pl[3]) {
+					if (pl[3] == pl[6]) {
+						if (pl[3] == 1) {
+							player1.victorySC(1);
+							player2.victorySC(2);
+						} else if (pl[3] == 2) {
+							player1.victorySC(2);
+							player2.victorySC(1);
+						}
+					}
+				}
+				if (pl[1] == pl[4]) {
+					if (pl[4] == pl[7]) {
+						if (pl[4] == 1) {
+							player1.victorySC(1);
+							player2.victorySC(2);
+						} else if (pl[4] == 2) {
+							player1.victorySC(2);
+							player2.victorySC(1);
+						}
+					}
+				}
+				if (pl[2] == pl[5]) {
+					if (pl[5] == pl[8]) {
+						if (pl[5] == 1) {
+							player1.victorySC(1);
+							player2.victorySC(2);
+						} else if (pl[5] == 2) {
+							player1.victorySC(2);
+							player2.victorySC(1);
+						}
+					}
+				}
+				int h = 0;
+				for (int j = 0; j<i.length;j++){
+					h+=i[j];
+				}
+				if (h == 9){
+					player1.victorySC(0);
+					player2.victorySC(0);
+				}
+			
+	}//victory
 
 	
 	

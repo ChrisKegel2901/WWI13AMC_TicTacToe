@@ -13,7 +13,9 @@ import java.rmi.RemoteException;
  */
 public interface TicTacToe_client extends Remote {
 
-	public void setSignSC (int position) throws RemoteException;
+	public void setSignSC (int position, String symbol) throws RemoteException;
+	
+	public void reset () throws RemoteException;
 	
 	public void victorySC (int winner) throws RemoteException;
 }
