@@ -323,22 +323,69 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 		
 	}//Konstruktor
 	
-	@Override
-	public void setSignSC(int position, String symbol) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+	private void setActive (Boolean active){
+		if (active){
+			for (int i=0; i < buttons.size()-1; i++){
+				if (textFelder[i].getText() == null){
+					buttons.get(i).setEnabled(true);
+				} else {
+					buttons.get(i).setEnabled(false);
+				}
+			}
+		} else {
+			for (JButton button : buttons)
+				button.setEnabled(false);
+		}
 	}
 	
 	@Override
-	public void reset() throws RemoteException {
-		// TODO Auto-generated method stub
+	public void setSignSC(int position, String symbol, int player) throws RemoteException {
+		textFelder[(position - 1)].setText(symbol);
+		if (player == 1){  
+			jTextField2.setText("Your turn");
+			setActive(true);
+		} else {
+			jTextField2.setText("Oppenents turn");
+			setActive(false);
+		}
+		 // jTextField3.setText(symbol); ???
+		  buttons.get((position - 1)).setEnabled(false);
+	}
+	
+	@Override
+	public void reset(int player, String symbol) throws RemoteException {
+		if (player == 1){
+			jTextField2.setText("your turn");
+			for (JButton button : buttons)
+				button.setEnabled(true);
+		} else {
+			jTextField2.setText("Opponents turn");
+			for (JButton button : buttons)
+				button.setEnabled(false);
+		}
+		jTextField3.setText(symbol);
+
+		for (int l = 0; l < textFelder.length; l++) {
+			textFelder[l].setText("");
+		}
+		jTextField4.setText("");
+		jButton10.setEnabled(false);
 		
 	}
 
 
 	@Override
 	public void victorySC(int winner) throws RemoteException {
-		// TODO Auto-generated method stub
+		if (winner == 1){
+			 jTextField4.setText("You win!");
+		} else if (winner == 2){
+			 jTextField4.setText("Opponent wins!");
+		} else {
+		 	jTextField4.setText("Draw!");
+		}
+		jButton10.setEnabled(true); 
+		for (JButton button : buttons)
+		button.setEnabled(false);
 		
 	}
 	
@@ -347,6 +394,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 		try {
 			server = (TicTacToe_server)
 					Naming.lookup("rmi://localhost/TicTacToe:1099");
+					server.anmelden();
 		} catch (MalformedURLException e) {
 			System.out.println(e);
 		} catch (RemoteException e) {
@@ -355,7 +403,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 			System.out.println(e);
 		}
 		if(server == null) {
-			System.out.println("Keine Verbindung zum Server m�glich, bitte erneut versuchen!");
+			System.out.println("Keine Verbindung zum Server moeglich, bitte erneut versuchen!");
 			System.exit(1);
 		}
 		@SuppressWarnings("unused")
@@ -365,24 +413,3 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 
 }// class TicTacToe_client_Impl
 
-/* TODO
- * setSignSC(){
- * textFelder[(holder - 1)].setText(Symbol);
- * jTextField2.setText("" + Player);
- * jTextField3.setText(Symbol); ???
- * buttons.get((holder - 1)).setEnabled(false);
- * } 
- * 
- * TODO
- * vitorySC(winner){
- * if (winner == 1)
- * 		jTextField4.setText("You win!");
- * else if (winner == 2)
- *		jTextField4.setText("Opponent wins!");
- * else		[winner ist dann 0]
- * 		jTextField4.setText("Draw!");
- * jButton10.setEnabled(true); 
- * for (JButton button : buttons)
- * button.setEnabled(false);
- * }
- */

@@ -14,7 +14,7 @@ import tictactoe_rmi_interface.TicTacToe_client;
 /**
 *
 * Dies ist die Server - Klasse des TicTacToe Spiels.
-* Hier lï¿½uft die Spielelogik, die durch die jeweiligen Clients aufgerufen wird.
+* Hier läuft die Spielelogik, die durch die jeweiligen Clients aufgerufen wird.
 * Die Clients stellen die GUI, der Server die Methoden.
 *
 * @version 1.2 vom 07.07.2015
@@ -50,23 +50,27 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 				"Server wurde erfolgreich angemeldet!");
 	} //Konstruktor
 
-
+	@Override
+	public void anmelden() throws RemoteException{
+		//TODO player1 und player2 setzen
+	}
+	
 	@Override
 	public void jButton_ActionPerformedCS(ActionEvent evt, int holder) throws RemoteException {
 		if (i[(holder - 1)] == 0) {
 			if (player == 1) {
 				pl[(holder - 1)] = 1;
 				player = 2;
+				player1.setSignSC(holder, symbol, 2);
+				player2.setSignSC(holder, symbol, 1);
 				symbol = "O";
-				player1.setSignSC(holder, symbol);
-				player2.setSignSC(holder, symbol);
 				
 			} else {
 				pl[(holder - 1)] = 2;
 				player = 1;
+				player1.setSignSC(holder, symbol, 1);
+				player2.setSignSC(holder, symbol, 2);
 				symbol = "X";
-				player1.setSignSC(holder, symbol);
-				player2.setSignSC(holder, symbol);
 			}
 			i[(holder - 1)] = 1;
 			try {
@@ -81,8 +85,8 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 	@Override
 	public void jButton10_ActionPerformedCS(ActionEvent evt)
 			throws RemoteException {
-		player1.reset();
-		player2.reset();
+		player1.reset(1, "X");
+		player2.reset(2, "X");
 		for (int h = 0; h < i.length; h++) {
 			i[h] = 0;
 		}
