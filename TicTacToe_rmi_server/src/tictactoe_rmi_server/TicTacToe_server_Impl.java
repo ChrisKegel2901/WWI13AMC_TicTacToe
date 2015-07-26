@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import tictactoe_rmi_interface.TicTacToe_int;
+import tictactoe_rmi_interface.TicTacToe_server;
 
 /**
 *
@@ -21,9 +21,9 @@ import tictactoe_rmi_interface.TicTacToe_int;
 * @author Philipp Naeser, Christian Kegelmann WWI13AMC
 */
 @SuppressWarnings("serial")
-public class TicTacToe extends UnicastRemoteObject implements TicTacToe_int {
+public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTacToe_server {
 
-	protected TicTacToe() throws RemoteException {
+	protected TicTacToe_server_Impl() throws RemoteException {
 		super();
 		// Den Server bei der rmiregistry anmelden (binden)
 		System.out.println(
@@ -43,20 +43,20 @@ public class TicTacToe extends UnicastRemoteObject implements TicTacToe_int {
 
 
 	@Override
-	public void jButton_ActionPerformed(ActionEvent evt) throws RemoteException {
+	public void jButton_ActionPerformedCS(ActionEvent evt) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void jButton10_ActionPerformed(ActionEvent evt)
+	public void jButton10_ActionPerformedCS(ActionEvent evt)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void Victory() throws RemoteException {
+	public void victoryCS() throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}

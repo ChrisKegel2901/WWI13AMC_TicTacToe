@@ -16,7 +16,7 @@ import java.rmi.RemoteException;
  * @author Christian Kegelmann, Philipp Naeser WWI13AMC
  * @version 1.2 07.07.2015
  */
-public interface TicTacToe_int extends Remote {
+public interface TicTacToe_server extends Remote {
 	
 	/**
 	 * Diese Methode setzt die "X" bzw. "O", wenn der
@@ -25,7 +25,7 @@ public interface TicTacToe_int extends Remote {
 	 * @param Actionevent des gedr�ckten Buttons
 	 * 
 	 */
-	public void jButton_ActionPerformed(ActionEvent evt) throws RemoteException;
+	public void jButton_ActionPerformedCS(ActionEvent evt) throws RemoteException;
 	
 	/**
 	 * Hier wird das Spiel zur�ckgesetzt und neu gestartet.
@@ -33,7 +33,7 @@ public interface TicTacToe_int extends Remote {
 	 * @param Actionevent des gedr�ckten Buttons
 	 * 
 	 */
-	public void jButton10_ActionPerformed(ActionEvent evt) throws RemoteException;
+	public void jButton10_ActionPerformedCS(ActionEvent evt) throws RemoteException;
 	
 	/**
 	 * Hier pr�ft das Spiel, ob einer der Spieler
@@ -41,7 +41,7 @@ public interface TicTacToe_int extends Remote {
 	 * Die Anzahl der gewonnenen Spiele werden nach Spieler
 	 * gez�hlt und als Zwischenstand ausgegeben.
 	 */
-	public void Victory() throws RemoteException;
+	public void victoryCS() throws RemoteException;
 	
 	
 
