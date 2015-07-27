@@ -13,7 +13,6 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -30,7 +29,6 @@ import TicTacToe_rmi_chatHandleImpl.chatHandleImpl;
 import TicTacToe_rmi_chatServer.chatServer;
 import TicTacToe_rmi_chatSession.chatSession;
 
-
 /**
  *
  * Dies ist die Lobby - Klasse des TicTacToe Spiels. Hier wird der Chat und die
@@ -43,27 +41,29 @@ import TicTacToe_rmi_chatSession.chatSession;
 @SuppressWarnings("serial")
 public class lobby extends JFrame {
 
-	private ArrayList<JButton> buttons = new ArrayList<JButton>();
-	private JButton jButton1 = new JButton();
-	private JButton jButton2 = new JButton();
+	private JButton beitrittButton = new JButton();
+	private JButton erstellenButton = new JButton();
 	private JButton chatButton = new JButton();
 
-	private JTextField jTextField1 = new JTextField();
+	private JTextField nameSpiel = new JTextField();
 	private JTextField chatFeld = new JTextField();
-	
 
-	chatHandle handle;
-	chatSession session;
-	String nickname;
-	private JLabel jLabel1 = new JLabel();
-
-	private int[] i = new int[9];
+	private chatHandle handle;
+	private chatSession session;
+	private String nickname;
+	private JLabel titel = new JLabel();
 
 	final DefaultListModel<String> model;
 	final DefaultListModel<String> chat;
-
-	private JButton jButton10 = new JButton();
-
+	final JList<String> list;
+	final JList<String> chatList;
+	
+	/**
+	 *
+	 * Sendet eine Nachricht an den Server
+	 *
+	 * @throws java.rmi.RemoteException
+	 */
 	private void senden() throws RemoteException {
 		String msg = chatFeld.getText();
 
@@ -71,12 +71,26 @@ public class lobby extends JFrame {
 		chatFeld.setText("");
 
 	}
-
+	/**
+	 *
+	 * Erstellt anhand des Benutzernamen des Users die GUI und baut eine Verbindung zum Chat-/Lobby-Server auf.
+	 *
+	 * @param name Benutzername des Users
+	 * @throws java.net.MalformedURLException
+	 * @throws java.rmi.RemoteException
+	 * @throws java.rmi.NotBoundException
+	 * 
+	 */
 	public lobby(String name) throws MalformedURLException, RemoteException, NotBoundException {
+
+		// Verbindung zu Server aufbauen
 
 		chatServer server = (chatServer) Naming.lookup("rmi://192.168.0.12:2021/chat-server");
 		handle = new chatHandleImpl(this);
 		session = server.createSession(name, handle);
+
+		// GUI erstellen und KeyListener hinzufuegen
+
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		int frameWidth = 640;
 		int frameHeight = 480;
@@ -102,20 +116,18 @@ public class lobby extends JFrame {
 		});
 
 		// Anfang Komponenten
-		for (int j = 0; j < i.length; j++) {
-			i[j] = 0;
-		}
-		jButton1.setBounds(510, 345, 115, 33);
-		jButton1.setText("Beitreten");
-		jButton1.setMargin(new Insets(2, 2, 2, 2));
 
-		cp.add(jButton1);
-		jButton2.setBounds(510, 423, 115, 33);
-		jButton2.setText("Erstellen");
-		jButton2.setMargin(new Insets(2, 2, 2, 2));
-		jButton2.addActionListener(new ActionListener() {
+		beitrittButton.setBounds(510, 345, 115, 33);
+		beitrittButton.setText("Beitreten");
+		beitrittButton.setMargin(new Insets(2, 2, 2, 2));
+		cp.add(beitrittButton);
+
+		erstellenButton.setBounds(510, 423, 115, 33);
+		erstellenButton.setText("Erstellen");
+		erstellenButton.setMargin(new Insets(2, 2, 2, 2));
+		erstellenButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String a = jTextField1.getText();
+				String a = nameSpiel.getText();
 				try {
 					session.sendGame(a);
 				} catch (RemoteException e1) {
@@ -125,7 +137,7 @@ public class lobby extends JFrame {
 
 			}
 		});
-		cp.add(jButton2);
+		cp.add(erstellenButton);
 
 		chatButton.setBounds(11, 423, 85, 33);
 		chatButton.setText("Senden");
@@ -142,29 +154,26 @@ public class lobby extends JFrame {
 		});
 		cp.add(chatButton);
 
-		jTextField1.setBounds(510, 390, 115, 32);
-		jTextField1.setText("");
-		jTextField1.setEditable(true);
-		cp.add(jTextField1);
+		nameSpiel.setBounds(510, 390, 115, 32);
+		nameSpiel.setText("");
+		nameSpiel.setEditable(true);
+		cp.add(nameSpiel);
 
 		chatFeld.setBounds(101, 423, 403, 32);
 		chatFeld.setText("");
 		chatFeld.setEditable(true);
 		cp.add(chatFeld);
 
-		jLabel1.setBounds(225, 16, 190, 32);
-		jLabel1.setText("TIC-TAC-TOE");
-		jLabel1.setFont(new Font("MS Sans Serif", Font.PLAIN, 23));
-		cp.add(jLabel1);
-
-		buttons.add(jButton1);
+		titel.setBounds(225, 16, 190, 32);
+		titel.setText("TIC-TAC-TOE");
+		titel.setFont(new Font("MS Sans Serif", Font.PLAIN, 23));
+		cp.add(titel);
 
 		model = new DefaultListModel<String>();
-		
 		chat = new DefaultListModel<String>();
 
-		final JList<String> list = new JList<String>(model);
-		final JList<String> chatList = new JList<String>(chat);
+		list = new JList<String>(model);
+		chatList = new JList<String>(chat);
 
 		JScrollPane pane = new JScrollPane(list);
 		pane.setBounds(510, 65, 115, 275);
@@ -174,11 +183,14 @@ public class lobby extends JFrame {
 		chatPane.setBounds(15, 65, 485, 355);
 		add(chatPane);
 		// Ende Komponenten
-		jButton10.setEnabled(false);
+
 		setResizable(false);
 		setVisible(true);
 	}
-
+	/**
+	 *
+	 * Fragt den Benutzernamen des Users ab und erstellt mit diesem ein Objekt der Klasse lobby
+	 */
 	public static void main(String[] args) {
 		try {
 			String name = JOptionPane.showInputDialog(null, "Eingabe des Nickname");
@@ -196,10 +208,26 @@ public class lobby extends JFrame {
 
 	}
 
+
+/**
+ *
+ * Empfaengt eine Nachricht vom Server und traegt sie in das Chat-Fenster ein
+ *
+ * @param nickname Benutzername des Senders
+ * @param message Die Nachricht des Senders
+ */
 	public void receiveMessage(String nickname, String message) {
 		chat.addElement(nickname + ": " + message);
 
 	}
+
+	
+	/**
+	 *
+	 * Empfaengt ein Spiel vom Server und traegt sie in die Spiel-Liste ein
+	 *
+	 * @param game Ein erstelltes Spiel
+	 */
 	public void receiveGame(String game) {
 		model.addElement(game);
 
