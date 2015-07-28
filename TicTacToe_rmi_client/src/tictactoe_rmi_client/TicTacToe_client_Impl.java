@@ -27,6 +27,7 @@ import tictactoe_rmi_interface.TicTacToe_server;
 
 
 //TODO Frame auslagern, hier wird Kommunikation mit Server geregelt (= extends UnicastRemoteObject)
+//Nur wenn es so nicht gehen sollte.
 
 @SuppressWarnings("serial")
 public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
@@ -393,7 +394,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 		TicTacToe_server server = null;
 		try {
 			server = (TicTacToe_server)
-					Naming.lookup("rmi://localhost/TicTacToe:1099");
+					Naming.lookup("rmi://192.168.0.12:1099/TicTacToe");
 					server.anmeldenCS();
 		} catch (MalformedURLException e) {
 			System.out.println(e);

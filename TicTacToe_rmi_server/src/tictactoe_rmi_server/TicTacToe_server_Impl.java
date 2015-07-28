@@ -4,9 +4,8 @@ import java.awt.event.ActionEvent;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
-
-
 
 import tictactoe_rmi_interface.TicTacToe_server;
 import tictactoe_rmi_interface.TicTacToe_client;
@@ -39,7 +38,7 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 				"TicTacToe - Konstruktor: " +
 				"Den Server bei der rmiregistry anmelden (binden)...");
 		try {
-			Naming.rebind("rmi://localhost/TicTacToe:1099", this);
+			Naming.rebind("rmi://192.168.0.12:1099/TicTacToe", this);
 		} catch (MalformedURLException e) {
 			System.out.println("TicTacToe - Konstruktor: URL fehlerhaft:");
 			e.printStackTrace();
@@ -206,7 +205,15 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 			
 	}//victory
 
-	
+	public static void main(String args[]) {
+		try {
+			LocateRegistry.createRegistry(1099);
+			@SuppressWarnings("unused")
+			TicTacToe_server_Impl server = new TicTacToe_server_Impl();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 	
 
 }//class TicTacToe
