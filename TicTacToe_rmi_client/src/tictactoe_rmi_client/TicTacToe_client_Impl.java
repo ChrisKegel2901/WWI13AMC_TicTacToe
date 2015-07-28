@@ -353,7 +353,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 	}
 	
 	@Override
-	public void reset(int player, String symbol) throws RemoteException {
+	public void resetSC(int player, String symbol) throws RemoteException {
 		if (player == 1){
 			jTextField2.setText("your turn");
 			for (JButton button : buttons)
@@ -394,7 +394,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 		try {
 			server = (TicTacToe_server)
 					Naming.lookup("rmi://localhost/TicTacToe:1099");
-					server.anmelden();
+					server.anmeldenCS();
 		} catch (MalformedURLException e) {
 			System.out.println(e);
 		} catch (RemoteException e) {

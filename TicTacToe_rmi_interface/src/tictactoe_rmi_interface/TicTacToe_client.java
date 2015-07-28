@@ -18,7 +18,7 @@ public interface TicTacToe_client extends Remote {
 	 * welches Zeichen an welcher Position gerade gesetzt wurde.
 	 * @param position position, an der Zeichen eingefügt wird
 	 * @param symbol welches Zeichen wird eingefügt
-	 * @param player welcher Spieler ist an der Reihe	 * 
+	 * @param player welcher Spieler ist an der Reihe	 
 	 * @throws RemoteException
 	 */
 	public void setSignSC (int position, String symbol, int player) throws RemoteException;
@@ -30,7 +30,7 @@ public interface TicTacToe_client extends Remote {
 	 * @param symbol welcher Symbol hat der Spieler, der an der Reihe ist.
 	 * @throws RemoteException
 	 */
-	public void reset (int player, String symbol) throws RemoteException;
+	public void resetSC (int player, String symbol) throws RemoteException;
 	
 	/**
 	 * Hier errechnet der Server, dass das Spiel beendet wurde und gibt

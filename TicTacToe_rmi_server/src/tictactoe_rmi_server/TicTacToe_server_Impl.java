@@ -51,7 +51,7 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 	} //Konstruktor
 
 	@Override
-	public void anmelden() throws RemoteException{
+	public void anmeldenCS() throws RemoteException{
 		//TODO player1 und player2 setzen
 	}
 	
@@ -85,8 +85,8 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 	@Override
 	public void jButton10_ActionPerformedCS(ActionEvent evt)
 			throws RemoteException {
-		player1.reset(1, "X");
-		player2.reset(2, "X");
+		player1.resetSC(1, "X");
+		player2.resetSC(2, "X");
 		for (int h = 0; h < i.length; h++) {
 			i[h] = 0;
 		}

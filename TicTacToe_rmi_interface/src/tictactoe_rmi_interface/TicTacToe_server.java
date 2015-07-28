@@ -19,10 +19,11 @@ import java.rmi.RemoteException;
 public interface TicTacToe_server extends Remote {
 	
 	/**
-	 * 
+	 * Methode, mit dem der Client sich beim Server anmeldet.
+	 * Dieser speichert den Client als player1 oder player2 und gibt diese Info an den Client zurück.
 	 * @throws RemoteException
 	 */
-	public void anmelden() throws RemoteException;
+	public void anmeldenCS() throws RemoteException;
 	
 	/**
 	 * Diese Methode setzt die "X" bzw. "O", wenn der
