@@ -321,7 +321,14 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 				setResizable(false);
 				setVisible(true);
 
-		
+				//Anmeldung beim Spieleserver
+				System.out.println("Client meldet sich beim Spielserver an!");
+				try {
+					server.anmeldenCS(this);
+					System.out.println("angemeldet");
+				} catch (RemoteException e) {
+					System.out.println("Konnte nicht beim Server angemeldet werden!");
+				}
 	}//Konstruktor
 	
 	private void setActive (Boolean active){
@@ -394,8 +401,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 		TicTacToe_server server = null;
 		try {
 			server = (TicTacToe_server)
-					Naming.lookup("rmi://192.168.0.12:1099/TicTacToe");
-					server.anmeldenCS();
+					Naming.lookup("rmi://localhost:1099/TicTacToe");
 		} catch (MalformedURLException e) {
 			System.out.println(e);
 		} catch (RemoteException e) {

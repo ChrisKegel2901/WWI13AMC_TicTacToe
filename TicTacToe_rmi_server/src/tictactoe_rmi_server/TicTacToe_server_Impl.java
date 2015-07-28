@@ -38,20 +38,27 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 				"TicTacToe - Konstruktor: " +
 				"Den Server bei der rmiregistry anmelden (binden)...");
 		try {
-			Naming.rebind("rmi://192.168.0.12:1099/TicTacToe", this);
+			Naming.rebind("rmi://localhost:1099/TicTacToe", this);
+			System.out.println(
+					"TicTacToe - Konstruktor: " +
+					"Server wurde erfolgreich angemeldet!");
 		} catch (MalformedURLException e) {
 			System.out.println("TicTacToe - Konstruktor: URL fehlerhaft:");
 			e.printStackTrace();
 			System.exit(1);
 		}
-		System.out.println(
-				"TicTacToe - Konstruktor: " +
-				"Server wurde erfolgreich angemeldet!");
 	} //Konstruktor
 
 	@Override
-	public void anmeldenCS() throws RemoteException{
-		//TODO player1 und player2 setzen
+	public void anmeldenCS(TicTacToe_client client) throws RemoteException{
+		System.out.println("Spieler versucht, sich anzumelden!");
+		if (player1 == null){
+			player1 = client;
+		} else if (player2 == null){
+			player2 = client;
+		} else {
+			System.out.println("Spiel ist bereits voll, tut mir leid.");
+		}
 	}
 	
 	@Override
