@@ -326,6 +326,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 				try {
 					server.anmeldenCS(this);
 					System.out.println("angemeldet");
+					setActive(false);
 				} catch (RemoteException e) {
 					System.out.println("Konnte nicht beim Server angemeldet werden!");
 				}

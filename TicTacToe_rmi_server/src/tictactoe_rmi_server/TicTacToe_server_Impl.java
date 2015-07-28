@@ -56,6 +56,8 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 			player1 = client;
 		} else if (player2 == null){
 			player2 = client;
+			player1.resetSC(1, "X");
+			player2.resetSC(2, "X");
 		} else {
 			System.out.println("Spiel ist bereits voll, tut mir leid.");
 		}
