@@ -43,7 +43,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 		private JButton jButton7 = new JButton();
 		private JButton jButton8 = new JButton();
 		private JButton jButton9 = new JButton();
-
+		TicTacToe_server gameServer = null;
 		private JTextField jTextField1 = new JTextField();
 		private JTextField jTextField11 = new JTextField();
 		private JTextField jTextField12 = new JTextField();
@@ -69,7 +69,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 		// Ende Attributes
 
 
-	public TicTacToe_client_Impl(String title, TicTacToe_server server){
+	public TicTacToe_client_Impl(String title, int portNumber){
 		// Frame-Initialisierung
 				super(title);
 				setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -83,6 +83,24 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 				Container cp = getContentPane();
 				cp.setLayout(null);
 
+				try {
+					
+					gameServer = (TicTacToe_server)
+							Naming.lookup("rmi://localhost:"+portNumber+"/TicTacToe");
+				} catch (MalformedURLException e) {
+					System.out.println(e);
+				} catch (RemoteException e) {
+					System.out.println(e);
+				} catch (NotBoundException e) {
+					System.out.println(e);
+				}
+				if(gameServer == null) {
+					System.out.println("Keine Verbindung zum Server moeglich, bitte erneut versuchen!");
+					System.exit(1);
+				}
+				
+				
+				
 				// Anfang Komponenten
 				for (int j = 0; j < i.length; j++) {
 					i[j] = 0;
@@ -94,7 +112,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 					public void actionPerformed(ActionEvent evt) {
 						holder = 1;
 						try {
-							server.jButton_ActionPerformedCS(evt, holder);
+							gameServer.jButton_ActionPerformedCS(evt, holder);
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e);
@@ -109,7 +127,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 					public void actionPerformed(ActionEvent evt) {
 						holder = 2;
 						try {
-							server.jButton_ActionPerformedCS(evt, holder);
+							gameServer.jButton_ActionPerformedCS(evt, holder);
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e);
@@ -124,7 +142,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 					public void actionPerformed(ActionEvent evt) {
 						holder = 3;
 						try {
-							server.jButton_ActionPerformedCS(evt, holder);
+							gameServer.jButton_ActionPerformedCS(evt, holder);
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e);
@@ -139,7 +157,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 					public void actionPerformed(ActionEvent evt) {
 						holder = 4;
 						try {
-							server.jButton_ActionPerformedCS(evt, holder);
+							gameServer.jButton_ActionPerformedCS(evt, holder);
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e);
@@ -154,7 +172,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 					public void actionPerformed(ActionEvent evt) {
 						holder = 5;
 						try {
-							server.jButton_ActionPerformedCS(evt, holder);
+							gameServer.jButton_ActionPerformedCS(evt, holder);
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e);
@@ -169,7 +187,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 					public void actionPerformed(ActionEvent evt) {
 						holder = 6;
 						try {
-							server.jButton_ActionPerformedCS(evt, holder);
+							gameServer.jButton_ActionPerformedCS(evt, holder);
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e);
@@ -184,7 +202,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 					public void actionPerformed(ActionEvent evt) {
 						holder = 7;
 						try {
-							server.jButton_ActionPerformedCS(evt, holder);
+							gameServer.jButton_ActionPerformedCS(evt, holder);
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e);
@@ -199,7 +217,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 					public void actionPerformed(ActionEvent evt) {
 						holder = 8;
 						try {
-							server.jButton_ActionPerformedCS(evt, holder);
+							gameServer.jButton_ActionPerformedCS(evt, holder);
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e);
@@ -214,7 +232,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 					public void actionPerformed(ActionEvent evt) {
 						holder = 9;
 						try {
-							server.jButton_ActionPerformedCS(evt, holder);
+							gameServer.jButton_ActionPerformedCS(evt, holder);
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e);
@@ -297,7 +315,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 				jButton10.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						try {
-							server.jButton10_ActionPerformedCS(evt);
+							gameServer.jButton10_ActionPerformedCS(evt);
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e);
@@ -322,14 +340,16 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 				setVisible(true);
 
 				//Anmeldung beim Spieleserver
+				
 				System.out.println("Client meldet sich beim Spielserver an!");
 				try {
-					server.anmeldenCS(this);
+					gameServer.anmeldenCS(this);
 					System.out.println("angemeldet");
 					setActive(false);
 				} catch (RemoteException e) {
 					System.out.println("Konnte nicht beim Server angemeldet werden!");
 				}
+				
 	}//Konstruktor
 	
 	private void setActive (Boolean active){
@@ -398,26 +418,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 		
 	}
 	
-	public static void main(String[] args) {
-		TicTacToe_server server = null;
-		try {
-			server = (TicTacToe_server)
-					Naming.lookup("rmi://localhost:1099/TicTacToe");
-		} catch (MalformedURLException e) {
-			System.out.println(e);
-		} catch (RemoteException e) {
-			System.out.println(e);
-		} catch (NotBoundException e) {
-			System.out.println(e);
-		}
-		if(server == null) {
-			System.out.println("Keine Verbindung zum Server moeglich, bitte erneut versuchen!");
-			System.exit(1);
-		}
-		@SuppressWarnings("unused")
-		TicTacToe_client_Impl game = new TicTacToe_client_Impl("TicTacToe", server);	
-
-	}//main	
+		
 
 }// class TicTacToe_client_Impl
 

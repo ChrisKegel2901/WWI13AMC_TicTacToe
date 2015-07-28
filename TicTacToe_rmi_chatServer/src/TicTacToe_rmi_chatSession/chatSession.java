@@ -26,8 +26,9 @@ public interface chatSession extends Remote {
 	*  Sendet ein erstelltes Spiel an den Server
 	* 
 	*  @param game Das erstellte Spiel
+	*  @param portNumber Port-Nummer des erstellten Spiels
 	*  @throws java.rmi.RemoteException
 	*/
-	public void sendGame(String game) throws RemoteException;
+	public void sendGame(String game, int portNumber) throws RemoteException;
 
 }

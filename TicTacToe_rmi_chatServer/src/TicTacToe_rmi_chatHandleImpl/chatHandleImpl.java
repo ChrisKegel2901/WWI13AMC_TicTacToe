@@ -2,6 +2,7 @@ package TicTacToe_rmi_chatHandleImpl;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 import TicTacToe_rmi_chatHandle.chatHandle;
 import lobby_rmi.lobby;
@@ -42,9 +43,11 @@ public class chatHandleImpl extends UnicastRemoteObject implements chatHandle {
 	 /**
 	  * Bekommt den Spiel-Namen vom Client uebergeben und fuert damit die Methode receiveGame auf dem Objekt client aus.
 	*/
-	public void receiveGame(String game) {
-		client.receiveGame(game);
+	public void receiveGame(String game, ArrayList<Integer> gameList, ArrayList<String> nameList) {
+		client.receiveGame(game, gameList, nameList);
 		
 	}
+
+	
 
 }

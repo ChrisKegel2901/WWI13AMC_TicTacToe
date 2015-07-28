@@ -1,1 +1,7 @@
+TicTacToe_rmi_chatHandle
+TicTacToe_rmi_chatHandleImpl
+TicTacToe_rmi_chatServer
+TicTacToe_rmi_chatServerImpl
+TicTacToe_rmi_chatSession
 TicTacToe_rmi_chatSessionImpl
+lobby_rmi

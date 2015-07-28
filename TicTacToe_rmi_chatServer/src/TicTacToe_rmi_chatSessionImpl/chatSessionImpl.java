@@ -1,11 +1,18 @@
 package TicTacToe_rmi_chatSessionImpl;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import TicTacToe_rmi_chatHandle.chatHandle;
 import TicTacToe_rmi_chatServerImpl.chatServerImpl;
 import TicTacToe_rmi_chatSession.chatSession;
+import tictactoe_rmi_client.TicTacToe_client_Impl;
+import tictactoe_rmi_interface.TicTacToe_client;
+import tictactoe_rmi_interface.TicTacToe_server;
+import tictactoe_rmi_server.TicTacToe_server_Impl;
 
 /**
 *
@@ -19,6 +26,8 @@ public class chatSessionImpl extends UnicastRemoteObject implements chatSession 
 	chatServerImpl server;
 	String nickname;
 	chatHandle handle;
+	TicTacToe_client game = null;
+	TicTacToe_server gameServer = null;
 
 	public chatSessionImpl() throws RemoteException {
 	}
@@ -53,12 +62,16 @@ public class chatSessionImpl extends UnicastRemoteObject implements chatSession 
 	*
 	*  Sendet ein erstelltes Spiel an den Server
 	* 
-	*  @param game Das erstellte Spiel
+	*  @param gameName Name des erstellten Spiels
 	*  @throws java.rmi.RemoteException
 	*/
-	public void sendGame(String game) throws RemoteException {
-		server.postGame(game);
+	public void sendGame(String gameName, int portNumber) throws RemoteException {
+		TicTacToe_server_Impl gameServer = new TicTacToe_server_Impl(portNumber);
+		game = new TicTacToe_client_Impl("TicTacToe", portNumber);
+		server.postGame(gameName, portNumber);
 	}
+	
+	
 
 	/**
 	*

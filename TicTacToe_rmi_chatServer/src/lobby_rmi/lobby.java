@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -28,6 +29,7 @@ import TicTacToe_rmi_chatHandle.chatHandle;
 import TicTacToe_rmi_chatHandleImpl.chatHandleImpl;
 import TicTacToe_rmi_chatServer.chatServer;
 import TicTacToe_rmi_chatSession.chatSession;
+import tictactoe_rmi_client.TicTacToe_client_Impl;
 
 /**
  *
@@ -44,7 +46,8 @@ public class lobby extends JFrame {
 	private JButton beitrittButton = new JButton();
 	private JButton erstellenButton = new JButton();
 	private JButton chatButton = new JButton();
-
+	private ArrayList<Integer> gameList2 = new ArrayList<Integer>();
+	private ArrayList<String> nameList2 = new ArrayList<String>();
 	private JTextField nameSpiel = new JTextField();
 	private JTextField chatFeld = new JTextField();
 
@@ -120,6 +123,25 @@ public class lobby extends JFrame {
 		beitrittButton.setBounds(510, 345, 115, 33);
 		beitrittButton.setText("Beitreten");
 		beitrittButton.setMargin(new Insets(2, 2, 2, 2));
+		beitrittButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String geklicktesSpiel = list.getSelectedValue();
+				System.out.println(geklicktesSpiel);
+				int index = 0;
+				for (int i = 0; i < (nameList2.size()); i++){
+					String a = nameList2.get(i);
+					if (a.equals(geklicktesSpiel))
+					{
+						index = i;
+					}
+				}
+				int portNumber = gameList2.get(index);
+				System.out.println(""+portNumber);
+				new TicTacToe_client_Impl("TicTacToe", portNumber);
+				
+
+			}
+		});
 		cp.add(beitrittButton);
 
 		erstellenButton.setBounds(510, 423, 115, 33);
@@ -129,7 +151,8 @@ public class lobby extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String a = nameSpiel.getText();
 				try {
-					session.sendGame(a);
+					
+					session.sendGame(a, (1099 + gameList2.size()));
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -228,8 +251,14 @@ public class lobby extends JFrame {
 	 *
 	 * @param game Ein erstelltes Spiel
 	 */
-	public void receiveGame(String game) {
-		model.addElement(game);
+	public void receiveGame(String game, ArrayList<Integer> gameList, ArrayList<String> nameList) {
+		nameList2 = nameList;
+		gameList2 = gameList;
+		model.clear();
+		for (int i = 0; i < nameList.size(); i++){
+			model.addElement(nameList.get(i));
+		}
+		
 
 	}
 }

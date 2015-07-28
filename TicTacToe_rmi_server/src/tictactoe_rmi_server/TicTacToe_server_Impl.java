@@ -13,7 +13,7 @@ import tictactoe_rmi_interface.TicTacToe_client;
 /**
 *
 * Dies ist die Server - Klasse des TicTacToe Spiels.
-* Hier läuft die Spielelogik, die durch die jeweiligen Clients aufgerufen wird.
+* Hier lï¿½uft die Spielelogik, die durch die jeweiligen Clients aufgerufen wird.
 * Die Clients stellen die GUI, der Server die Methoden.
 *
 * @version 1.2 vom 07.07.2015
@@ -31,14 +31,15 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 	
 	
 
-	protected TicTacToe_server_Impl() throws RemoteException {
+	public TicTacToe_server_Impl(int port) throws RemoteException {
 		super();
 		// Den Server bei der rmiregistry anmelden (binden)
 		System.out.println(
 				"TicTacToe - Konstruktor: " +
 				"Den Server bei der rmiregistry anmelden (binden)...");
 		try {
-			Naming.rebind("rmi://localhost:1099/TicTacToe", this);
+			LocateRegistry.createRegistry(port);
+			Naming.rebind("rmi://localhost:"+port+"/TicTacToe", this);
 			System.out.println(
 					"TicTacToe - Konstruktor: " +
 					"Server wurde erfolgreich angemeldet!");
@@ -214,15 +215,7 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 			
 	}//victory
 
-	public static void main(String args[]) {
-		try {
-			LocateRegistry.createRegistry(1099);
-			@SuppressWarnings("unused")
-			TicTacToe_server_Impl server = new TicTacToe_server_Impl();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
+	
 	
 
 }//class TicTacToe

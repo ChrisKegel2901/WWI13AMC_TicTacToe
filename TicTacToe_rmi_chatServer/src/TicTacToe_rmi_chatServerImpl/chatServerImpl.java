@@ -11,6 +11,7 @@ import TicTacToe_rmi_chatHandle.chatHandle;
 import TicTacToe_rmi_chatServer.chatServer;
 import TicTacToe_rmi_chatSession.chatSession;
 import TicTacToe_rmi_chatSessionImpl.chatSessionImpl;
+import tictactoe_rmi_interface.TicTacToe_client;
 
 import java.util.ArrayList;
 /**
@@ -25,6 +26,9 @@ import java.util.ArrayList;
 public class chatServerImpl extends UnicastRemoteObject implements chatServer {
 	List<chatSessionImpl> sessions = new ArrayList<chatSessionImpl>();
 
+	private ArrayList<Integer> gameList = new ArrayList<Integer>();
+	private ArrayList<String> nameList = new ArrayList<String>();
+	
 	public chatServerImpl() throws RemoteException {
 	}
 
@@ -77,17 +81,22 @@ public class chatServerImpl extends UnicastRemoteObject implements chatServer {
 	*
 	* Sendet eine erstelltes Spiel an alle in der ArrayList vorhanden Clients, via for-Schleife. Indem es die Funktion receiveGame jedes Clients aufruft.
 	* 
-	*  @param game Beinhaltet das zu uebergebende Spiel
+	*  @param gameName Beinhaltet den Namen des zu uebergebenden Spiels
+	*  @param portNumber Port-Nummer des zu uebergebenden Spiels
 	*  @throws java.rmi.RemoteException
 	*
 	*/
-	public void postGame(String game) throws RemoteException {
+	public void postGame(String gameName, int portNumber) throws RemoteException {
 		chatSessionImpl tmp;
+		gameList.add(portNumber);
+		nameList.add(gameName);
 		for (int i = 0; i < sessions.size(); i++) {
 			tmp = (chatSessionImpl) sessions.get(i);
-			tmp.getClientHandle().receiveGame(game);
+			tmp.getClientHandle().receiveGame(gameName, gameList, nameList);
 		}
 	}
+	
+	
 
 	/**
 	*
@@ -106,6 +115,7 @@ public class chatServerImpl extends UnicastRemoteObject implements chatServer {
 	*
 	*/
 	public static void main(String args[]) {
+		
 		try {
 			LocateRegistry.createRegistry(2021);
 			Naming.rebind("rmi://192.168.0.12:2021/chat-server", new chatServerImpl());
