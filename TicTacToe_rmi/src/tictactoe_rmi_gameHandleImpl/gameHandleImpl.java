@@ -23,8 +23,8 @@ public class gameHandleImpl extends UnicastRemoteObject implements gameHandle {
 	 * au�erdem den jetzt aktiven Spieler
 	 */
 	@Override
-	public void setSignSC(int position, String symbol, int player, int playerAct) throws RemoteException {
-		client.setSign(position, symbol, player, playerAct);	
+	public void setSignSC(int position, String symbol, int player) throws RemoteException {
+		client.setSign(position, symbol, player);	
 	} // setSignSC
 
 	/**

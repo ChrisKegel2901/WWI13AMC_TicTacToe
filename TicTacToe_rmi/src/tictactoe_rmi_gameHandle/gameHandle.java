@@ -21,7 +21,7 @@ public interface gameHandle extends Remote {
 	 * @param player welcher Spieler ist an der Reihe	 
 	 * @throws RemoteException
 	 */
-	public void setSignSC (int position, String symbol, int player, int playerAct) throws RemoteException;
+	public void setSignSC (int position, String symbol, int player) throws RemoteException;
 		
 	/**
 	 * Hier wird dem Handler die Anweisung gegeben, das

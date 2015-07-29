@@ -351,15 +351,15 @@ public class game extends JFrame {
 	 * @param symbol welches Zeichen muss da hin
 	 * @param player wer ist danach aktiv (1 ich, 2 der andere)
 	 */
-	public void setSign(int position, String symbol, int player, int playerAct) {
+	public void setSign(int position, String symbol, int player) {
 		textFelder[(position - 1)].setText(symbol);
 		if (player == 1){  
 			jTextField4.setText("Your turn");
-			jTextField2.setText(""+playerAct);
+			
 			setActive(true);
 		} else {
 			jTextField4.setText("Oppenents turn");
-			jTextField2.setText(""+playerAct);
+			
 			setActive(false);
 		}
 		 if(symbol.equals("X")){
