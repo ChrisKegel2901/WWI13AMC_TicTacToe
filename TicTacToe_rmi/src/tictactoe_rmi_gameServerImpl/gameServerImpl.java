@@ -44,7 +44,7 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 				"Den Server bei der rmiregistry anmelden (binden)...");
 		try {
 			LocateRegistry.createRegistry(port);
-			Naming.rebind("rmi://localhost:"+port+"/TicTacToe", this);
+			Naming.rebind("rmi://localhost:"+port+"/gameServer", this);
 			System.out.println(
 					"TicTacToe - Konstruktor: " +
 					"Server wurde erfolgreich angemeldet!");
@@ -61,8 +61,11 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 		s = new gameSessionImpl (this, name, handle);
 		if (player1 == null){
 			player1 = s;
+			player1.getClientHandle().resetSC(0, "X");
 		} else if (player2 == null){
 			player2 = s;
+			player1.getClientHandle().resetSC(1, "X");
+			player2.getClientHandle().resetSC(2, "X");
 		}
 		sessions.add(s);
 		return s;

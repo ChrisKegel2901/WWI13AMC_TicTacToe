@@ -66,7 +66,7 @@ public class game extends JFrame {
 	
 		//Anmeldung beim Spieleserver
 		gameServer gameServer;	
-		gameServer = (gameServer) Naming.lookup("rmi://localhost:2021/gameServer");
+		gameServer = (gameServer) Naming.lookup("rmi://localhost:" + portNumber +"/gameServer");
 		handle = new gameHandleImpl(this);
 		session = gameServer.createSession(name, handle);
 		
