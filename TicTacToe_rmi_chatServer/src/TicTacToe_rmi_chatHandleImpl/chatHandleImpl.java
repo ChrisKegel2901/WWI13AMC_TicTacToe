@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import TicTacToe_rmi_chatHandle.chatHandle;
 import lobby_rmi.lobby;
 
-import java.rmi.Naming;
-
 /**
  *
  * Dies ist die Klasse zur Implementierung des Chat Handlers. Sie traegt eine ihr uebergebenes Lobby-Objekt

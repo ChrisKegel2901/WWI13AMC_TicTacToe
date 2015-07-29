@@ -11,8 +11,6 @@ import TicTacToe_rmi_chatHandle.chatHandle;
 import TicTacToe_rmi_chatServer.chatServer;
 import TicTacToe_rmi_chatSession.chatSession;
 import TicTacToe_rmi_chatSessionImpl.chatSessionImpl;
-import tictactoe_rmi_interface.TicTacToe_client;
-
 import java.util.ArrayList;
 /**
 *
