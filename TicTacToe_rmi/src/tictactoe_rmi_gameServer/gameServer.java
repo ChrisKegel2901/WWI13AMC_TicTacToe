@@ -27,7 +27,7 @@ public interface gameServer extends Remote {
 	 * entsprechende Button gedrueckt wird.
 	 * Dabei wird das ActionEvent des gedrueckten Buttons uebergeben.
 	 * @param evt Actionevent des gedrueckten Buttons
-	 * @param holder Stelle an der eingefügt wird.
+	 * @param holder Stelle an der eingefuegt wird.
 	 * @throws RemoteException
 	 */
 	public void jButton_ActionPerformedCS(ActionEvent evt, int holder) throws RemoteException;
@@ -42,7 +42,7 @@ public interface gameServer extends Remote {
 
 	/**
 	 * Methode, mit dem der Client sich beim Server anmeldet.
-	 * Dabei wird eine neue gameSession erstellt, die den gameHandler des Spielers enthält
+	 * Dabei wird eine neue gameSession erstellt, die den gameHandler des Spielers enthaelt
 	 * @throws RemoteException
 	 */
 	public gameSession createSession(String name, gameHandle handle) throws RemoteException;

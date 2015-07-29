@@ -346,7 +346,7 @@ public class game extends JFrame {
 	
 	/**
 	 * Setzt das vom Server vorgegebene Zeichen an die vorgegebene Position des Spielfeldes
-	 * gibt au�erdem an, wer als n�chstes am Zug ist
+	 * gibt ausserdem an, wer als naechstes am Zug ist
 	 * @param position wo muss das Zeichen hin
 	 * @param symbol welches Zeichen muss da hin
 	 * @param player wer ist danach aktiv (1 ich, 2 der andere)
