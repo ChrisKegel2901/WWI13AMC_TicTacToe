@@ -31,6 +31,7 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 	private String symbol = "X";
 	private gameSessionImpl player1;
 	private gameSessionImpl player2;
+	int playercount;
 	private int[] pl = new int[9];
 	private int[] i = new int[9];
 	
@@ -48,6 +49,7 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 			System.out.println(
 					"TicTacToe - Konstruktor: " +
 					"Server wurde erfolgreich angemeldet!");
+			playercount = 0;
 		} catch (MalformedURLException e) {
 			System.out.println("TicTacToe - Konstruktor: URL fehlerhaft:");
 			e.printStackTrace();
@@ -59,10 +61,12 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 	public gameSession createSession(String name, gameHandle handle) throws RemoteException {
 		gameSessionImpl s;
 		s = new gameSessionImpl (this, name, handle);
-		if (player1 == null){
+		if (playercount == 0){
+			playercount++;
 			player1 = s;
 			player1.getClientHandle().resetSC(0, "X");
-		} else if (player2 == null){
+		} else if (playercount == 1){
+			playercount++;
 			player2 = s;
 			player1.getClientHandle().resetSC(1, "X");
 			player2.getClientHandle().resetSC(2, "X");
@@ -228,6 +232,11 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 
 	
 	public static void main(String[] args) {
+		try {
+			new gameServerImpl(1099);
+		} catch (RemoteException e) {
+			System.out.println("Server wurde nicht gestartet");
+		}
 
 	} //main
 

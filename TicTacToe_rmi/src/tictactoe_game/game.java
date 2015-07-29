@@ -64,11 +64,6 @@ public class game extends JFrame {
 
 	public game(String name, int portNumber, String nickname) throws MalformedURLException, RemoteException, NotBoundException{
 	
-		//Anmeldung beim Spieleserver
-		gameServer gameServer;	
-		gameServer = (gameServer) Naming.lookup("rmi://localhost:" + portNumber +"/gameServer");
-		handle = new gameHandleImpl(this);
-		session = gameServer.createSession(name, handle);
 		
 		// Frame-Initialisierung			
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -319,6 +314,12 @@ public class game extends JFrame {
 		setResizable(false);
 		setVisible(true);
 
+	//Anmeldung beim Spieleserver
+		gameServer gameServer;	
+		gameServer = (gameServer) Naming.lookup("rmi://localhost:" + portNumber +"/gameServer");
+		handle = new gameHandleImpl(this);
+		session = gameServer.createSession(name, handle);
+				
 			
 	}//Konstruktor
 	
@@ -366,7 +367,7 @@ public class game extends JFrame {
 		}
 		jTextField3.setText(symbol);
 
-		for (int l = 0; l < textFelder.length; l++) {
+		for (int l = 0; l < textFelder.length-1; l++) {
 			textFelder[l].setText("");
 		}
 		jTextField4.setText("");
@@ -392,6 +393,12 @@ public class game extends JFrame {
 	
 	
 	public static void main(String[] args) {
+		try {
+			new game("tictactoe", 1099, "phil");
+			new game("tictactoe2", 1099, "chris");
+		} catch (MalformedURLException | RemoteException | NotBoundException e) {
+			System.out.println("Keine Spiele gestartet!");
+		}
 		
 	}// main
 
