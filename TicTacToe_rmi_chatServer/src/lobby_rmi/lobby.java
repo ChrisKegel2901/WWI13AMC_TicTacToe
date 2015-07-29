@@ -29,7 +29,7 @@ import TicTacToe_rmi_chatHandle.chatHandle;
 import TicTacToe_rmi_chatHandleImpl.chatHandleImpl;
 import TicTacToe_rmi_chatServer.chatServer;
 import TicTacToe_rmi_chatSession.chatSession;
-import tictactoe_rmi_client_handle.tictactoe_rmi_client_handle;
+import tictactoe_game.game;
 
 /**
  *
@@ -138,8 +138,8 @@ public class lobby extends JFrame {
 				int portNumber = gameList2.get(index);
 				System.out.println(""+portNumber);
 				try {
-					new tictactoe_rmi_client_handle("TicTacToe", portNumber, nickname);
-				} catch (RemoteException e1) {
+					new game("TicTacToe", portNumber, nickname);
+				} catch (RemoteException | MalformedURLException | NotBoundException e1) {
 					System.out.println("Spiel konnte nicht erstellt werden");
 				}
 				

@@ -1,12 +1,15 @@
 /**
  * Das Remote-Interface fuer das
- * TicTacToe_rmi Projekt
+ * TicTacToe_rmi Projekt (Server Interface)
  */
-package tictactoe_rmi_interface;
+package tictactoe_rmi_gameServer;
 
 import java.awt.event.ActionEvent;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+
+import tictactoe_rmi_gameHandle.gameHandle;
+import tictactoe_rmi_gameSession.gameSession;
 
 /**
  * Diese Interface regelt die Kommunikation
@@ -16,15 +19,9 @@ import java.rmi.RemoteException;
  * @author Christian Kegelmann, Philipp Naeser WWI13AMC
  * @version 1.2 07.07.2015
  */
-public interface TicTacToe_server extends Remote {
+public interface gameServer extends Remote {
 	
-	/**
-	 * Methode, mit dem der Client sich beim Server anmeldet.
-	 * Dieser speichert den Client als player1 oder player2 und gibt diese Info an den Client zurück.
-	 * @throws RemoteException
-	 */
-	public void anmeldenCS(String client) throws RemoteException;
-	
+		
 	/**
 	 * Diese Methode setzt die "X" bzw. "O", wenn der
 	 * entsprechende Button gedrueckt wird.
@@ -42,6 +39,13 @@ public interface TicTacToe_server extends Remote {
 	 * @throws RemoteException
 	 */
 	public void jButton10_ActionPerformedCS(ActionEvent evt) throws RemoteException;
+
+	/**
+	 * Methode, mit dem der Client sich beim Server anmeldet.
+	 * Dabei wird eine neue gameSession erstellt, die den gameHandler des Spielers enthält
+	 * @throws RemoteException
+	 */
+	public gameSession createSession(String name, gameHandle handle) throws RemoteException;
 	
 
-}//class TicTacToe_int
+}//class TicTacToe_rmi_gameServer

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class chatServerImpl extends UnicastRemoteObject implements chatServer {
 	List<chatSessionImpl> sessions = new ArrayList<chatSessionImpl>();
-
 	private ArrayList<Integer> gameList = new ArrayList<Integer>();
 	private ArrayList<String> nameList = new ArrayList<String>();
 	
