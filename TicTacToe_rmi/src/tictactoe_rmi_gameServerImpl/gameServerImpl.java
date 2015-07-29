@@ -68,7 +68,7 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 			playercount++;
 			player1 = s;
 			System.out.println("Player 1 angemeldet");
-			//player1.getClientHandle().resetSC(0, "X");
+			player1.getClientHandle().resetSC(0, "X");
 		} else if (playercount == 1){
 			playercount++;
 			player2 = s;
