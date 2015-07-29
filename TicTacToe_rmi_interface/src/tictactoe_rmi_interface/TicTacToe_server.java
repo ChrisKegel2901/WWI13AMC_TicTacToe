@@ -23,7 +23,7 @@ public interface TicTacToe_server extends Remote {
 	 * Dieser speichert den Client als player1 oder player2 und gibt diese Info an den Client zurück.
 	 * @throws RemoteException
 	 */
-	public void anmeldenCS(TicTacToe_client client) throws RemoteException;
+	public void anmeldenCS(String client) throws RemoteException;
 	
 	/**
 	 * Diese Methode setzt die "X" bzw. "O", wenn der

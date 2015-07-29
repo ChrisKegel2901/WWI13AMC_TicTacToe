@@ -3,6 +3,7 @@ package tictactoe_rmi_server;
 import java.awt.event.ActionEvent;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
@@ -51,12 +52,21 @@ public class TicTacToe_server_Impl extends UnicastRemoteObject implements TicTac
 	} //Konstruktor
 
 	@Override
-	public void anmeldenCS(TicTacToe_client client) throws RemoteException{
+	public void anmeldenCS(String client) throws RemoteException{
 		System.out.println("Spieler versucht, sich anzumelden!");
 		if (player1 == null){
-			player1 = client;
+			try {
+				player1 = (TicTacToe_client) Naming.lookup(client);
+			} catch (MalformedURLException | NotBoundException e) {
+				System.out.println("Client wurde nicht gefunden");
+			}
+			player1.resetSC(0, "X");
 		} else if (player2 == null){
-			player2 = client;
+			try {
+				player2 = (TicTacToe_client) Naming.lookup(client);
+			} catch (MalformedURLException | NotBoundException e) {
+				System.out.println("Client wurde nicht gefunden");
+			}
 			player1.resetSC(1, "X");
 			player2.resetSC(2, "X");
 		} else {

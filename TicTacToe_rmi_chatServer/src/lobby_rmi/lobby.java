@@ -88,7 +88,7 @@ public class lobby extends JFrame {
 
 		// Verbindung zu Server aufbauen
 
-		chatServer server = (chatServer) Naming.lookup("rmi://192.168.0.12:2021/chat-server");
+		chatServer server = (chatServer) Naming.lookup("rmi://localhost:2021/chat-server");
 		handle = new chatHandleImpl(this);
 		session = server.createSession(name, handle);
 
@@ -137,7 +137,7 @@ public class lobby extends JFrame {
 				}
 				int portNumber = gameList2.get(index);
 				System.out.println(""+portNumber);
-				new TicTacToe_client_Impl("TicTacToe", portNumber);
+				new TicTacToe_client_Impl("TicTacToe", portNumber, nickname);
 				
 
 			}

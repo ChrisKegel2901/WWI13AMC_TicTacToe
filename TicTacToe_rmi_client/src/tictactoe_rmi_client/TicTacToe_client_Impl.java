@@ -69,7 +69,7 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 		// Ende Attributes
 
 
-	public TicTacToe_client_Impl(String title, int portNumber){
+	public TicTacToe_client_Impl(String title, int portNumber, String nickname){
 		// Frame-Initialisierung
 				super(title);
 				setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -340,12 +340,16 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 				setVisible(true);
 
 				//Anmeldung beim Spieleserver
-				
+				String url = "rmi://localhost:"+portNumber+"/" + nickname;
+				try {
+					Naming.rebind(url, this);
+				} catch (RemoteException | MalformedURLException e1) {
+					System.out.println("Client konnte sich nicht bei RMI binden");
+				}
 				System.out.println("Client meldet sich beim Spielserver an!");
 				try {
-					gameServer.anmeldenCS(this);
+					gameServer.anmeldenCS(url);
 					System.out.println("angemeldet");
-					setActive(false);
 				} catch (RemoteException e) {
 					System.out.println("Konnte nicht beim Server angemeldet werden!");
 				}
@@ -385,10 +389,12 @@ public class TicTacToe_client_Impl extends JFrame implements TicTacToe_client {
 	public void resetSC(int player, String symbol) throws RemoteException {
 		if (player == 1){
 			jTextField2.setText("your turn");
-			for (JButton button : buttons)
-				button.setEnabled(true);
-		} else {
+			setActive(true);
+		} else if (player == 2) {
 			jTextField2.setText("Opponents turn");
+			setActive(false);
+		} else {
+			jTextField2.setText("Please wait for Player 2");
 			for (JButton button : buttons)
 				button.setEnabled(false);
 		}

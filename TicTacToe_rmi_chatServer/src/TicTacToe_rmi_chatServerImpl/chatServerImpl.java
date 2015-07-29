@@ -118,7 +118,7 @@ public class chatServerImpl extends UnicastRemoteObject implements chatServer {
 		
 		try {
 			LocateRegistry.createRegistry(2021);
-			Naming.rebind("rmi://192.168.0.12:2021/chat-server", new chatServerImpl());
+			Naming.rebind("rmi://localhost:2021/chat-server", new chatServerImpl());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

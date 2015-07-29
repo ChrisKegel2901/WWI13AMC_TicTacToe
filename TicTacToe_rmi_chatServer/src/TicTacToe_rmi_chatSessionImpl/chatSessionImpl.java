@@ -67,7 +67,7 @@ public class chatSessionImpl extends UnicastRemoteObject implements chatSession 
 	*/
 	public void sendGame(String gameName, int portNumber) throws RemoteException {
 		TicTacToe_server_Impl gameServer = new TicTacToe_server_Impl(portNumber);
-		game = new TicTacToe_client_Impl("TicTacToe", portNumber);
+		game = new TicTacToe_client_Impl("TicTacToe", portNumber, nickname);
 		server.postGame(gameName, portNumber);
 	}
 	
