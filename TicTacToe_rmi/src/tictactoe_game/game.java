@@ -318,11 +318,17 @@ public class game extends JFrame {
 		gameServer gameServer;	
 		gameServer = (gameServer) Naming.lookup("rmi://localhost:" + portNumber +"/gameServer");
 		handle = new gameHandleImpl(this);
-		session = gameServer.createSession(name, handle);
+		session = gameServer.createSession(nickname, handle);
 				
 			
 	}//Konstruktor
 	
+	
+	/**
+	 * Setzt die Buttons aktiv/inaktiv, je nachdem
+	 * welcher Spieler gerade am Zug ist.
+	 * @param active gibt an, ob man selbst aktiv ist oder nicht (true oder false)
+	 */
 	private void setActive (Boolean active){
 		if (active){
 			for (int i=0; i < buttons.size()-1; i++){
@@ -338,7 +344,13 @@ public class game extends JFrame {
 		}
 	}// setActive
 	
-	
+	/**
+	 * Setzt das vom Server vorgegebene Zeichen an die vorgegebene Position des Spielfeldes
+	 * gibt außerdem an, wer als nächstes am Zug ist
+	 * @param position wo muss das Zeichen hin
+	 * @param symbol welches Zeichen muss da hin
+	 * @param player wer ist danach aktiv (1 ich, 2 der andere)
+	 */
 	public void setSign(int position, String symbol, int player) {
 		textFelder[(position - 1)].setText(symbol);
 		if (player == 1){  
@@ -348,11 +360,20 @@ public class game extends JFrame {
 			jTextField4.setText("Oppenents turn");
 			setActive(false);
 		}
-		 // jTextField3.setText(symbol); ???
+		 if(symbol.equals("X")){
+			 jTextField3.setText("O");
+		 } else {
+			 jTextField3.setText("X");
+		 }
 		  buttons.get((position - 1)).setEnabled(false);
 	} //setSign
 	
 
+	/**
+	 * Spielfeld wird zurückgesetzt auf Anfang, für eine neue Runde
+	 * @param player wer fängt an (1 ich, 2 der andere)
+	 * @param symbol welches symbol ist jetzt dran.
+	 */
 	public void reset(int player, String symbol) {
 		if (player == 1){
 			jTextField4.setText("your turn");
@@ -376,7 +397,11 @@ public class game extends JFrame {
 	} //reset
 
 
-	
+	/**
+	 * Sperrt die andere Buttons, aktiviert den Reset-Button
+	 * und gibt den Gewinner aus (0 unentschieden, 1 ich, 2 der andere)
+	 * @param winner wer hat gewonnen
+	 */
 	public void victory(int winner) {
 		if (winner == 1){
 			 jTextField4.setText("You win!");
@@ -391,7 +416,10 @@ public class game extends JFrame {
 		
 	} //victory
 	
-	
+	/**
+	 * nur zu Testzwecken, Spiele erstellen läuft über die Klasse lobby
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		try {
 			new game("tictactoe", 1099, "phil");
@@ -402,4 +430,4 @@ public class game extends JFrame {
 		
 	}// main
 
-}// class TicTacToe_game
+}// class game

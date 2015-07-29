@@ -34,7 +34,7 @@ public interface gameServer extends Remote {
 	
 	/**
 	 * Hier wird das Spiel zurueckgesetzt und neu gestartet.
-	 * Dabei wird das ActionEvent des gedrïueckten Buttons ï¿½bergeben.
+	 * Dabei wird das ActionEvent des gedrueckten Buttons uebergeben.
 	 * @param Actionevent des gedrueckten Buttons
 	 * @throws RemoteException
 	 */

@@ -17,7 +17,7 @@ import tictactoe_rmi_gameSessionImpl.gameSessionImpl;
 /**
 *
 * Dies ist die Server - Klasse des TicTacToe Spiels.
-* Hier l�uft die Spielelogik, die durch die jeweiligen Clients aufgerufen wird.
+* Hier laeuft die Spielelogik, die durch die jeweiligen Clients aufgerufen wird.
 * Die Clients stellen die GUI, der Server die Methoden.
 *
 * @version 1.2 vom 07.07.2015
@@ -57,6 +57,9 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 		}
 	} //Konstruktor
 
+	/**
+	 * erstellen der Session und hinzufuegen des jeweiligen Client Handlers
+	 */
 	@Override
 	public gameSession createSession(String name, gameHandle handle) throws RemoteException {
 		gameSessionImpl s;
@@ -75,10 +78,18 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 		return s;
 	}
 	
+	/**
+	 * Loeschen einer Session
+	 * @param session zu loeschende Session
+	 */
 	public void removeSession(gameSession session) {
 		sessions.remove(session);
 	}
 	
+	/**
+	 * Button zum setzen eines Zeichens wurde gedrueckt,
+	 * Server gibt Position und Zeichen an den Handler
+	 */
 	@Override
 	public void jButton_ActionPerformedCS(ActionEvent evt, int holder) throws RemoteException {
 		if (i[(holder - 1)] == 0) {
@@ -103,9 +114,12 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 				System.out.println("Konnte Client nicht mitteilen, wer gewonnen hat!");
 			}
 		}
-}
-		
+	}			
 
+	/**
+	 * Button zum Zuruecksetzen des Feldes wurde gedrueckt,
+	 * Variablen werden auf Anfang gesetzt um ein neues Spiel zu ermoeglichen
+	 */
 	@Override
 	public void jButton10_ActionPerformedCS(ActionEvent evt)
 			throws RemoteException {
@@ -123,6 +137,11 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 	}
 
 	
+	/**
+	 * Server prueft, ob jemand gewonnen hat.
+	 * Wenn ja wird diese Info an die Client Handler weitergegeben
+	 * @throws RemoteException
+	 */
 	public void victory() throws RemoteException  {
 		// Sieg Horizontal
 
@@ -231,6 +250,10 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 	}//victory
 
 	
+	/**
+	 * Nur Testweise, Server wird von lobby aus gestartet (erstellen)
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		try {
 			new gameServerImpl(1099);
