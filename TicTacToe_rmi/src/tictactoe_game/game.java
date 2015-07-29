@@ -63,14 +63,14 @@ public class game extends JFrame {
 
 
 	public game(String name, int portNumber, String nickname) throws MalformedURLException, RemoteException, NotBoundException{
-		
-		gameServer gameServer;
 	
+		//Anmeldung beim Spieleserver
+		gameServer gameServer;	
 		gameServer = (gameServer) Naming.lookup("rmi://localhost:2021/gameServer");
 		handle = new gameHandleImpl(this);
 		session = gameServer.createSession(name, handle);
-		// Frame-Initialisierung
-			
+		
+		// Frame-Initialisierung			
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		int frameWidth = 321;
 		int frameHeight = 319;
@@ -318,7 +318,7 @@ public class game extends JFrame {
 		jButton10.setEnabled(false);
 		setResizable(false);
 		setVisible(true);
-	//Anmeldung beim Spieleserver
+
 			
 	}//Konstruktor
 	

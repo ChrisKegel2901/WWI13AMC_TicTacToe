@@ -59,8 +59,17 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 	public gameSession createSession(String name, gameHandle handle) throws RemoteException {
 		gameSessionImpl s;
 		s = new gameSessionImpl (this, name, handle);
+		if (player1 == null){
+			player1 = s;
+		} else if (player2 == null){
+			player2 = s;
+		}
 		sessions.add(s);
 		return s;
+	}
+	
+	public void removeSession(gameSession session) {
+		sessions.remove(session);
 	}
 	
 	@Override
