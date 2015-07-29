@@ -138,7 +138,8 @@ public class lobby extends JFrame {
 				int portNumber = gameList2.get(index);
 				System.out.println(""+portNumber);
 				try {
-					new game("TicTacToe", portNumber, nickname);
+					game a = new game("TicTacToe", portNumber, nickname);
+					System.out.println("Spiel beigetreten");
 				} catch (RemoteException | MalformedURLException | NotBoundException e1) {
 					System.out.println("Spiel konnte nicht erstellt werden");
 				}

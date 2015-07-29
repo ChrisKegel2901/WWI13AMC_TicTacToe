@@ -331,8 +331,8 @@ public class game extends JFrame {
 	 */
 	private void setActive (Boolean active){
 		if (active){
-			for (int i=0; i < buttons.size()-1; i++){
-				if (textFelder[i].getText() == null){
+			for (int i=0; i < buttons.size(); i++){
+				if (textFelder[i].getText().equals("") || textFelder[i].getText()==null){
 					buttons.get(i).setEnabled(true);
 				} else {
 					buttons.get(i).setEnabled(false);
@@ -346,40 +346,50 @@ public class game extends JFrame {
 	
 	/**
 	 * Setzt das vom Server vorgegebene Zeichen an die vorgegebene Position des Spielfeldes
-	 * gibt außerdem an, wer als nächstes am Zug ist
+	 * gibt auï¿½erdem an, wer als nï¿½chstes am Zug ist
 	 * @param position wo muss das Zeichen hin
 	 * @param symbol welches Zeichen muss da hin
 	 * @param player wer ist danach aktiv (1 ich, 2 der andere)
 	 */
-	public void setSign(int position, String symbol, int player) {
+	public void setSign(int position, String symbol, int player, int playerAct) {
 		textFelder[(position - 1)].setText(symbol);
 		if (player == 1){  
 			jTextField4.setText("Your turn");
+			jTextField2.setText(""+playerAct);
 			setActive(true);
 		} else {
 			jTextField4.setText("Oppenents turn");
+			jTextField2.setText(""+playerAct);
 			setActive(false);
 		}
 		 if(symbol.equals("X")){
 			 jTextField3.setText("O");
+			 jTextField2.setText("2");
 		 } else {
 			 jTextField3.setText("X");
+			 jTextField2.setText("1");
 		 }
 		  buttons.get((position - 1)).setEnabled(false);
 	} //setSign
 	
 
 	/**
-	 * Spielfeld wird zurückgesetzt auf Anfang, für eine neue Runde
-	 * @param player wer fängt an (1 ich, 2 der andere)
+	 * Spielfeld wird zurï¿½ckgesetzt auf Anfang, fï¿½r eine neue Runde
+	 * @param player wer fï¿½ngt an (1 ich, 2 der andere)
 	 * @param symbol welches symbol ist jetzt dran.
 	 */
 	public void reset(int player, String symbol) {
+		for (int l = 0; l < textFelder.length; l++) {
+			textFelder[l].setText("");
+		}
+		jTextField4.setText("");
 		if (player == 1){
 			jTextField4.setText("your turn");
+			
 			setActive(true);
 		} else if (player == 2) {
 			jTextField4.setText("Opponents turn");
+			
 			setActive(false);
 		} else {
 			jTextField4.setText("Please wait for Player 2");
@@ -388,10 +398,7 @@ public class game extends JFrame {
 		}
 		jTextField3.setText(symbol);
 
-		for (int l = 0; l < textFelder.length-1; l++) {
-			textFelder[l].setText("");
-		}
-		jTextField4.setText("");
+		
 		jButton10.setEnabled(false);
 		
 	} //reset
@@ -417,7 +424,7 @@ public class game extends JFrame {
 	} //victory
 	
 	/**
-	 * nur zu Testzwecken, Spiele erstellen läuft über die Klasse lobby
+	 * nur zu Testzwecken, Spiele erstellen lï¿½uft ï¿½ber die Klasse lobby
 	 * @param args
 	 */
 	public static void main(String[] args) {

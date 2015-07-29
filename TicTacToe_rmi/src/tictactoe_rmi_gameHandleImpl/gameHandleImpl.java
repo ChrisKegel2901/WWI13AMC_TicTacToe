@@ -7,7 +7,7 @@ import tictactoe_game.game;
 import tictactoe_rmi_gameHandle.gameHandle;
 /**
  * Implementierung des gameHandle Interfaces
- * @author Philipp Näser, Christian Kegelmann
+ * @author Philipp Nï¿½ser, Christian Kegelmann
  *
  */
 @SuppressWarnings("serial")
@@ -20,11 +20,11 @@ public class gameHandleImpl extends UnicastRemoteObject implements gameHandle {
 
 	/**
 	 * gibt das Symbol und die Position vom Server an die Client-gui weiter,
-	 * außerdem den jetzt aktiven Spieler
+	 * auï¿½erdem den jetzt aktiven Spieler
 	 */
 	@Override
-	public void setSignSC(int position, String symbol, int player) throws RemoteException {
-		client.setSign(position, symbol, player);	
+	public void setSignSC(int position, String symbol, int player, int playerAct) throws RemoteException {
+		client.setSign(position, symbol, player, playerAct);	
 	} // setSignSC
 
 	/**

@@ -67,10 +67,12 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 		if (playercount == 0){
 			playercount++;
 			player1 = s;
-			player1.getClientHandle().resetSC(0, "X");
+			System.out.println("Player 1 angemeldet");
+			//player1.getClientHandle().resetSC(0, "X");
 		} else if (playercount == 1){
 			playercount++;
 			player2 = s;
+			System.out.println("Player 2 angemeledet");
 			player1.getClientHandle().resetSC(1, "X");
 			player2.getClientHandle().resetSC(2, "X");
 		}
@@ -96,15 +98,15 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 			if (player == 1) {
 				pl[(holder - 1)] = 1;
 				player = 2;
-				player1.getClientHandle().setSignSC(holder, symbol, 2);
-				player2.getClientHandle().setSignSC(holder, symbol, 1);
+				player1.getClientHandle().setSignSC(holder, symbol, 2, 2);
+				player2.getClientHandle().setSignSC(holder, symbol, 1, 1);
 				symbol = "O";
 				
 			} else {
 				pl[(holder - 1)] = 2;
 				player = 1;
-				player1.getClientHandle().setSignSC(holder, symbol, 1);
-				player2.getClientHandle().setSignSC(holder, symbol, 2);
+				player1.getClientHandle().setSignSC(holder, symbol, 1, 1);
+				player2.getClientHandle().setSignSC(holder, symbol, 2, 2);
 				symbol = "X";
 			}
 			i[(holder - 1)] = 1;
