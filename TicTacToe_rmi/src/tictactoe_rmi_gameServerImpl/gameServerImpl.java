@@ -28,6 +28,7 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 	
 	List<gameSessionImpl> sessions = new ArrayList<gameSessionImpl>();
 	private int player = 1;
+	private int lastloser;
 	private String symbol = "X";
 	private gameSessionImpl player1;
 	private gameSessionImpl player2;
@@ -125,8 +126,15 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 	@Override
 	public void jButton10_ActionPerformedCS(ActionEvent evt)
 			throws RemoteException {
-		player1.getClientHandle().resetSC(1, "X");
-		player2.getClientHandle().resetSC(2, "X");
+		if (lastloser == 1){
+			symbol = "X";
+			player1.getClientHandle().resetSC(1, "X");
+			player2.getClientHandle().resetSC(2, "X");
+		} else if (lastloser == 2){
+			symbol = "O";
+			player1.getClientHandle().resetSC(2, "O");
+			player2.getClientHandle().resetSC(1, "O");
+		}
 		for (int h = 0; h < i.length; h++) {
 			i[h] = 0;
 		}
@@ -134,8 +142,7 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 			pl[k] = 0;
 		}
 
-		player = 1;
-		symbol = "X";
+		player = lastloser;
 	}
 
 	
@@ -150,10 +157,12 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 				if (pl[0] == pl[1]) {
 					if (pl[1] == pl[2]) {
 						if (pl[1] == 1) {
+							lastloser = 2;
 							player1.getClientHandle().victorySC(1);
 							player2.getClientHandle().victorySC(2);
 							
 						} else if (pl[1] == 2) {
+							lastloser = 1;
 							player1.getClientHandle().victorySC(2);
 							player2.getClientHandle().victorySC(1);
 						}
@@ -162,9 +171,11 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 				if (pl[3] == pl[4]) {
 					if (pl[4] == pl[5]) {
 						if (pl[4] == 1) {
+							lastloser = 2;
 							player1.getClientHandle().victorySC(1);
 							player2.getClientHandle().victorySC(2);
 						} else if (pl[4] == 2) {
+							lastloser = 1;
 							player1.getClientHandle().victorySC(2);
 							player2.getClientHandle().victorySC(1);
 						}
@@ -173,9 +184,11 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 				if (pl[6] == pl[7]) {
 					if (pl[7] == pl[8]) {
 						if (pl[7] == 1) {
+							lastloser = 2;
 							player1.getClientHandle().victorySC(1);
 							player2.getClientHandle().victorySC(2);
 						} else if (pl[7] == 2) {
+							lastloser = 1;
 							player1.getClientHandle().victorySC(2);
 							player2.getClientHandle().victorySC(1);
 						}
@@ -186,9 +199,11 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 				if (pl[0] == pl[4]) {
 					if (pl[4] == pl[8]) {
 						if (pl[4] == 1) {
+							lastloser = 2;
 							player1.getClientHandle().victorySC(1);
 							player2.getClientHandle().victorySC(2);
 						} else if (pl[4] == 2) {
+							lastloser = 1;
 							player1.getClientHandle().victorySC(2);
 							player2.getClientHandle().victorySC(1);
 						}
@@ -197,9 +212,11 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 				if (pl[2] == pl[4]) {
 					if (pl[4] == pl[6]) {
 						if (pl[4] == 1) {
+							lastloser = 2;
 							player1.getClientHandle().victorySC(1);
 							player2.getClientHandle().victorySC(2);
 						} else if (pl[4] == 2) {
+							lastloser = 1;
 							player1.getClientHandle().victorySC(2);
 							player2.getClientHandle().victorySC(1);
 						}
@@ -210,9 +227,11 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 				if (pl[0] == pl[3]) {
 					if (pl[3] == pl[6]) {
 						if (pl[3] == 1) {
+							lastloser = 2;
 							player1.getClientHandle().victorySC(1);
 							player2.getClientHandle().victorySC(2);
 						} else if (pl[3] == 2) {
+							lastloser = 1;
 							player1.getClientHandle().victorySC(2);
 							player2.getClientHandle().victorySC(1);
 						}
@@ -221,9 +240,11 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 				if (pl[1] == pl[4]) {
 					if (pl[4] == pl[7]) {
 						if (pl[4] == 1) {
+							lastloser = 2;
 							player1.getClientHandle().victorySC(1);
 							player2.getClientHandle().victorySC(2);
 						} else if (pl[4] == 2) {
+							lastloser = 1;
 							player1.getClientHandle().victorySC(2);
 							player2.getClientHandle().victorySC(1);
 						}
@@ -232,9 +253,11 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 				if (pl[2] == pl[5]) {
 					if (pl[5] == pl[8]) {
 						if (pl[5] == 1) {
+							lastloser = 2;
 							player1.getClientHandle().victorySC(1);
 							player2.getClientHandle().victorySC(2);
 						} else if (pl[5] == 2) {
+							lastloser = 1;
 							player1.getClientHandle().victorySC(2);
 							player2.getClientHandle().victorySC(1);
 						}
@@ -245,6 +268,7 @@ public class gameServerImpl extends UnicastRemoteObject implements gameServer {
 					h+=i[j];
 				}
 				if (h == 9){
+					lastloser = 1;
 					player1.getClientHandle().victorySC(0);
 					player2.getClientHandle().victorySC(0);
 				}
